@@ -86,13 +86,21 @@ class Foglalas:
 
 
 def main():
+
     szalloda = Szalloda(nev="Luxus Hotel")
 
-    egyagyas = EgyagyasSzoba(szobaszam="A101")
-    ketagyas = KetagyasSzoba(szobaszam="B202")
+    szoba1 = EgyagyasSzoba(szobaszam="A101")
+    szoba2 = EgyagyasSzoba(szobaszam="A102")
+    szoba3 = KetagyasSzoba(szobaszam="B201")
+    szalloda.uj_szoba(szoba1)
+    szalloda.uj_szoba(szoba2)
+    szalloda.uj_szoba(szoba3)
 
-    szalloda.uj_szoba(egyagyas)
-    szalloda.uj_szoba(ketagyas)
+    szalloda.foglalas(szobaszam="A101", datum=datetime(2024, 5, 15))
+    szalloda.foglalas(szobaszam="A102", datum=datetime(2024, 5, 16))
+    szalloda.foglalas(szobaszam="B201", datum=datetime(2024, 5, 17))
+    szalloda.foglalas(szobaszam="A101", datum=datetime(2024, 5, 18))
+    szalloda.foglalas(szobaszam="B201", datum=datetime(2024, 5, 19))
 
     while True:
         print("\nVálasszon egy műveletet:")
