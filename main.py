@@ -49,6 +49,26 @@ class Szalloda:
         print("Nincs ilyen szoba!")
         return None
 
+    def lemondas(self, szobaszam, datum):
+        for szoba in self.szobak:
+            if szoba.szobaszam == szobaszam:
+                for foglalas in szoba.foglalasok:
+                    if foglalas.datum == datum:
+                        szoba.foglalasok.remove(foglalas)
+                        print("A foglalás sikeresen lemondva!")
+                        return
+                print("Nincs ilyen foglalás ezen a dátumon!")
+                return
+        print("Nincs ilyen szoba!")
+        return
+
+    def osszes_foglalas(self):
+        foglalasok = []
+        for szoba in self.szobak:
+            for foglalas in szoba.foglalasok:
+                foglalasok.append(foglalas)
+        return foglalasok
+
 
 class Foglalas:
     def __init__(self, szoba, datum):
