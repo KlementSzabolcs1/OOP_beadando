@@ -1,4 +1,6 @@
+import os
 from abc import ABC, abstractmethod
+from datetime import datetime
 
 
 class Szoba(ABC):
@@ -12,18 +14,18 @@ class Szoba(ABC):
 
 
 class EgyagyasSzoba(Szoba):
-    def __init__(self, szobaszam):
-        super().__init__(ar=50, szobaszam=szobaszam)
-        self.agyasok_szama = 1
+    def __init__(self, szobaszam, ar=50):
+        super().__init__(ar, szobaszam=szobaszam)
+        self.foglalasok = []
 
     def szolgaltatasok(self):
         return "TV, zuhanyzó, egyágyas ágy"
 
 
 class KetagyasSzoba(Szoba):
-    def __init__(self, szobaszam):
-        super().__init__(ar=80, szobaszam=szobaszam)
-        self.agyasok_szama = 2
+    def __init__(self, szobaszam, ar=80):
+        super().__init__(ar, szobaszam=szobaszam)
+        self.foglalasok = []
 
     def szolgaltatasok(self):
         return "TV, zuhanyzó, kétágyas ágy"
@@ -79,3 +81,54 @@ class Foglalas:
         return f"Foglalás: Szoba {self.szoba.szobaszam}, Dátum: {self.datum.strftime('%Y-%m-%d')}"
 
 
+def main():
+    szalloda = Szalloda(nev="Luxus Hotel")
+
+    egyagyas = EgyagyasSzoba(szobaszam="A101")
+    ketagyas = KetagyasSzoba(szobaszam="B202")
+
+    szalloda.uj_szoba(egyagyas)
+    szalloda.uj_szoba(ketagyas)
+
+    while True:
+        print("\nVálasszon egy műveletet:")
+        print("1. Foglalás")
+        print("2. Lemondás")
+        print("3. Foglalások listázása")
+        print("4. Kilépés")
+
+        valasztas = input("Adja meg a választott művelet számát: ")
+
+        if valasztas == "1":
+            szobaszam = input("Adja meg a szobaszámot: ")
+            datum_str = input("Adja meg a foglalás dátumát (ÉÉÉÉ-HH-NN formátumban): ")
+            datum = datetime.strptime(datum_str, "%Y-%m-%d")
+            ar = szalloda.foglalas(szobaszam, datum)
+            if ar is not None:
+                print(f"A foglalás sikeres! Az ár: {ar}")
+
+        elif valasztas == "2":
+            szobaszam = input("Adja meg a szobaszámot: ")
+            datum_str = input("Adja meg a lemondás dátumát (ÉÉÉÉ-HH-NN formátumban): ")
+            datum = datetime.strptime(datum_str, "%Y-%m-%d")
+            szalloda.lemondas(szobaszam, datum)
+
+        elif valasztas == "3":
+            foglalasok = szalloda.osszes_foglalas()
+            if foglalasok:
+                print("Összes foglalás:")
+                for foglalas in foglalasok:
+                    print(foglalas)
+            else:
+                print("Nincsenek foglalások.")
+
+        elif valasztas == "4":
+            print("Kilépés...")
+            break
+
+        else:
+            print("Érvénytelen választás.")
+
+
+if __name__ == "__main__":
+    main()
