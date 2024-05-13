@@ -27,3 +27,34 @@ class KetagyasSzoba(Szoba):
 
     def szolgaltatasok(self):
         return "TV, zuhanyzó, kétágyas ágy"
+
+
+class Szalloda:
+    def __init__(self, nev):
+        self.nev = nev
+        self.szobak = []
+
+    def uj_szoba(self, szoba):
+        self.szobak.append(szoba)
+
+    def osszes_szoba_ar(self):
+        osszeg = 0
+        for szoba in self.szobak:
+            osszeg += szoba.ar
+        return osszeg
+
+    def osszes_szoba_szolgaltatasok(self):
+        szolgaltatasok = []
+        for szoba in self.szobak:
+            szolgaltatasok.append(szoba.szolgaltatasok())
+        return szolgaltatasok
+
+
+class Foglalas:
+    def __init__(self, szoba, datum):
+        self.szoba = szoba
+        self.datum = datum
+
+    def __str__(self):
+        return f"Foglalás: Szoba {self.szoba.szobaszam}, Dátum: {self.datum.strftime('%Y-%m-%d')}"
+
