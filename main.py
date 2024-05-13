@@ -37,17 +37,17 @@ class Szalloda:
     def uj_szoba(self, szoba):
         self.szobak.append(szoba)
 
-    def osszes_szoba_ar(self):
-        osszeg = 0
+    def foglalas(self, szobaszam, datum):
         for szoba in self.szobak:
-            osszeg += szoba.ar
-        return osszeg
-
-    def osszes_szoba_szolgaltatasok(self):
-        szolgaltatasok = []
-        for szoba in self.szobak:
-            szolgaltatasok.append(szoba.szolgaltatasok())
-        return szolgaltatasok
+            if szoba.szobaszam == szobaszam:
+                for foglalas in szoba.foglalasok:
+                    if foglalas.datum == datum:
+                        print("Ez a szoba már foglalt ezen a napon!")
+                        return None
+                szoba.foglalasok.append(Foglalas(szoba, datum))
+                return szoba.ar
+        print("Nincs ilyen szoba!")
+        return None
 
 
 class Foglalas:
@@ -57,4 +57,5 @@ class Foglalas:
 
     def __str__(self):
         return f"Foglalás: Szoba {self.szoba.szobaszam}, Dátum: {self.datum.strftime('%Y-%m-%d')}"
+
 
