@@ -40,6 +40,10 @@ class Szalloda:
         self.szobak.append(szoba)
 
     def foglalas(self, szobaszam, datum):
+        today = datetime.today()
+        if datum <= today:
+            print("A foglalás dátuma nem lehet múltbeli vagy a mai nap!")
+            return None
         for szoba in self.szobak:
             if szoba.szobaszam == szobaszam:
                 for foglalas in szoba.foglalasok:
